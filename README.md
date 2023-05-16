@@ -1,22 +1,54 @@
-# pi-elk
+# Prometheus / Grafana / Loki
 
+## Prometheus
+
+<!-- https://pimylifeup.com/raspberry-pi-prometheus/ -->
 
 ```bash
-curl -sSL https://get.docker.com | sh
+wget https://github.com/prometheus/prometheus/releases/download/v2.44.0/prometheus-2.44.0.linux-armv7.tar.gz
+tar xfz prometheus-2.44.0.linux-armv7.tar.gz
 ```
 
 ```bash
-docker network create elastic
+sudo mv prometheus-2.44.0.linux-armv7/ /prometheus/
 ```
-
-https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
 
 ```bash
-docker run --name es01 --net elastic -p 9200:9200 -it docker.elastic.co/elasticsearch/elasticsearch:8.7.1
+rm prometheus-2.44.0.linux-armv7.tar.gz
 ```
-
-https://www.elastic.co/guide/en/kibana/current/docker.html
 
 ```bash
-docker run --name es-node01 --net elastic -p 9200:9200 -p 9300:9300 -t docker.elastic.co/elasticsearch/elasticsearch:8.7.1
+sudo useradd prometheus
+sudo chown prometheus:prometheus -R /prometheus 
 ```
+
+```bash
+sudo vim /etc/systemd/system/prometheus.service
+```
+
+```
+[Unit]
+Description=Prometheus Server
+Documentation=https://prometheus.io/docs/introduction/overview/
+After=network-online.target
+
+[Service]
+User=prometheus
+Restart=on-failure
+
+ExecStart=/prometheus/prometheus \
+  --config.file=/prometheus/prometheus.yml \
+  --storage.tsdb.path=/prometheus/data
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+sudo systemctl enable prometheus
+sudo systemctl start prometheus
+```
+
+## Grafana
+
+## Loki
