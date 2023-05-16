@@ -1,4 +1,4 @@
-# Prometheus / Grafana / Loki
+# Prometheus / Mosquitto / Grafana / Loki
 
 ## Prometheus
 
@@ -48,6 +48,15 @@ WantedBy=multi-user.target
 sudo systemctl enable prometheus
 sudo systemctl start prometheus
 ```
+
+## Mosquitto
+
+<!-- https://pimylifeup.com/raspberry-pi-mosquitto-mqtt-server/ -->
+
+```bash
+sudo apt install mosquitto mosquitto-clients
+```
+
 
 ## Grafana
 
