@@ -51,4 +51,25 @@ sudo systemctl start prometheus
 
 ## Grafana
 
+<!-- https://pimylifeup.com/raspberry-pi-grafana/ -->
+
+```bash
+curl https://apt.grafana.com/gpg.key | gpg --dearmor | sudo tee /usr/share/keyrings/grafana-archive-keyrings.gpg >/dev/null
+echo "deb [signed-by=/usr/share/keyrings/grafana-archive-keyrings.gpg] https://apt.grafana.com stable main" | sudo tee /etc/apt/sources.list.d/grafana.list
+```
+
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install grafana
+```
+
+```bash
+sudo systemctl enable grafana-server
+sudo systemctl start grafana-server
+```
+
+
 ## Loki
